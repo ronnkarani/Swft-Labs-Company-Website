@@ -31,6 +31,19 @@ h1 {
   pointer-events: none; /* <-- allow clicks through canvas */
 }
 
+.icon-accent {
+  color: #58a6ff;
+  font-size: 1.3rem;
+  margin-right: 6px;
+}
+
+.icon-white {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-right: 6px;
+}
+
+
 /* Navbar */
 .navbar {
   width: 100%;

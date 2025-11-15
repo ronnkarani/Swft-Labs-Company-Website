@@ -2,12 +2,12 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ post.title }} | SWFT LABS Blog{% endblock %}
+{% block title %}{{ post.title }} 📝 | SWFT LABS Blog{% endblock %}
 
 {% block content %}
 <main class="section blog-details">
   <div class="container">
-    <h1 class="blog-title">📝 {{ post.title }}</h1>
+    <h1 class="blog-title"><i class="uil uil-bolt"></i> {{ post.title }}</h1>
     <div class="blog-meta">
       <span><i class="uil uil-calendar-alt"></i> {{ post.created_at }}</span>
       <span><i class="uil uil-user"></i> {{ post.author }}</span>

@@ -1,239 +1,221 @@
-
-
 {% extends "base.html" %}
 {% load static %}
-{% block title %}💻 Home{% endblock %}
+{% block title %} Home{% endblock %}
 {% block content %}
 
-    <!-- 💻 Hero Section -->
-    <section class="home section" id="home">
-      <div class="home__container container">
-        <div class="home__content">
-          <div class="home__text">
-            <h1>{{ hero.greeting|safe }} <span class="hero-name"><strong>{{ hero.name|safe }}</strong></span> </h1>
-            <P>{{ hero.subtitle|safe }}</P>
-            <div class="home__buttons">
-              <a href="#projects" class="button">View Projects</a>
-              <a href="assets/Ronny_Karani_Resume.pdf" class="button button--outline" download>Get Quote</a>
-              <a href="#contact" class="button button--outline">Contact Us</a>
-            </div>
-            <div class="home__socials">
-              {% for link in social_links %}
-                <a href="{{ link.url }}" target="_blank">
-                  <i class="uil uil-{{ link.platform }}"></i>
-                </a>
-              {% endfor %}
-            </div>
-            
-          </div>
-          <div class="home__image">
-            {% if hero.image %}
-              <img src="{{ hero.image.url }}" alt="Hero Image">
-            {% endif %}
-          </div>
+<!-- Hero Section -->
+<section class="home section" id="home">
+  <div class="home__container container">
+    <div class="home__content">
+      <div class="home__text">
+        <h1>
+  <i class="uil uil-hand-wave-alt"></i> {{ hero.greeting|safe }} 
+  <span class="hero-name"><strong>{{ hero.name|safe }}</strong></span>
+</h1>
+
+        <p>{{ hero.subtitle|safe }}</p>
+        <div class="home__buttons">
+          <a href="#projects" class="button">View Projects</a>
+          <a href="assets/Ronny_Karani_Resume.pdf" class="button button--outline" download>Get Quote</a>
+          <a href="#contact" class="button button--outline">Contact Us</a>
         </div>
-      </div>
-    </section>
-
-        <!-- 🌍 Our Story Section -->
-    <section class="our-story section" id="about">
-      <div class="container">
-
-        <!-- Stats with Icons (still static unless you want them dynamic too) -->
-        <div class="stats">
-          <div class="stat">
-            <i class="uil uil-users-alt"></i>
-            <h3>50+</h3>
-            <p>Clients Served</p>
-          </div>
-          <div class="stat">
-            <i class="uil uil-check-circle"></i>
-            <h3>30+</h3>
-            <p>Projects Completed</p>
-          </div>
-          <div class="stat">
-            <i class="uil uil-award"></i>
-            <h3>100%</h3>
-            <p>Satisfaction Guaranteed</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 💻 About Section -->
-    <section class="projects section" id="projects">
-      <div class="container">
-        <h2 class="section-title">About Us 📂</h2>
-        <div class="project-grid">
-          {% for section in about_sections %}
-          <div class="project-card">
-            <h3> {{ section.title }}</h3>
-            <p>{{ section.content|safe }}</p>
-          </div>
+        <div class="home__socials">
+          {% for link in social_links %}
+            <a href="{{ link.url }}" target="_blank">
+              <i class="uil uil-{{ link.platform }}"></i>
+            </a>
           {% endfor %}
         </div>
       </div>
-    </section>
+      <div class="home__image">
+        {% if hero.image %}
+          <img src="{{ hero.image.url }}" alt="Hero Image">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- 🌍 Our Story Section -->
-    <section class="our-story section" id="about">
-      <div class="container">
-        <div class="story-grid">
-          <!-- Left card: Our Story -->
-          <div class="story-card">
-            <h2> {{ why_choose.title }}</h2>
-            <div>{{ why_choose.points|safe }}</div>
-          </div>
+<!-- Our Story Section -->
+<section class="our-story section" id="about">
+  <div class="container">
+    <div class="stats">
+      <div class="stat">
+        <i class="uil uil-users-alt"></i>
+        <h3>50+</h3>
+        <p>Clients Served</p>
+      </div>
+      <div class="stat">
+        <i class="uil uil-check-circle"></i>
+        <h3>30+</h3>
+        <p>Projects Completed</p>
+      </div>
+      <div class="stat">
+        <i class="uil uil-award"></i>
+        <h3>100%</h3>
+        <p>Satisfaction Guaranteed</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <!-- Right card: Why Choose Us -->
-          <div class="story-card">
-            <h2> {{ our_story.title }}</h2>
-            <p>{{ our_story.content|safe }}</p>
-          </div>
+<!-- About Section -->
+<section class="projects section" id="projects">
+  <div class="container">
+    <h2 class="section-title"><i class="uil uil-folder"></i> About Us</h2>
+    <div class="project-grid">
+      {% for section in about_sections %}
+      <div class="project-card">
+        <h3><i class="uil uil-lightbulb-alt"></i>{{ section.title }}</h3>
+        <p>{{ section.content|safe }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Our Story / Why Choose Us Section -->
+<section class="our-story section" id="about">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-card">
+        <h2><i class="uil uil-briefcase-alt"></i> {{ why_choose.title }}</h2>
+        <div> {{ why_choose.points|safe }}</div>
+      </div>
+      <div class="story-card">
+        <h2><i class="uil uil-brain"></i>{{ our_story.title }}</h2>
+        <p>{{ our_story.content|safe }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="timeline section" id="experience">
+  <div class="container">
+    <h2 class="section-title"><i class="uil uil-globe"></i> Our Services</h2>
+    <div class="timeline-container">
+      {% for service in services %}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3><i class="uil {{ service.icon }}"></i> {{ service.title }}</h3>
+          <span>{{ service.subtitle }}</span>
+          <p>{{ service.description|safe }}</p>
         </div>
       </div>
-    </section>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-    <!-- 🌐 Services Section -->
-    <section class="timeline section" id="experience">
-      <div class="container">
-        <h2 class="section-title">Our Services 🌐</h2>
-        <div class="timeline-container">
-          {% for service in services %}
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3>{{ service.icon }} {{ service.title }} </h3>
-              <span>{{ service.subtitle }}</span>
-              <p>{{ service.description|safe }}</p>
+<!-- Projects Section -->
+<section class="projects section" id="projects">
+  <div class="container">
+    <h2 class="section-title"><i class="uil uil-rocket"></i> Our Projects</h2>
+
+    <form method="GET" action="{% url 'projects' %}" class="search-filters">
+      <input type="text" name="q" placeholder="Search projects..." value="{{ request.GET.q }}">
+      <select name="category" onchange="this.form.submit()">
+        <option value="all">All Categories &#9660;</option>
+        {% for cat in project_categories %}
+          <option value="{{ cat.slug }}">{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="project-grid">
+      {% for project in projects %}
+      <div class="project-card">
+        {% if project.image %}
+          <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+        {% endif %}
+        <h3>
+          <a href="{% url 'project_details' project.slug %}" style="text-decoration: none;">{{ project.title }}</a>
+        </h3>
+        <p>{{ project.description|truncatewords:20|safe }}</p>
+        <div class="project-links">
+          {% if project.live_url %}
+          <a href="{{ project.live_url }}" target="_blank">View Project</a>
+          {% endif %}
+          <a href="{% url 'project_details' slug=project.slug %}" target="_blank" class="more-info">More Info</a>
+        </div>
+      </div>
+      {% empty %}
+      <p>No Projects added.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blogs section" id="blog">
+  <div class="container">
+    <h2 class="section-title"><i class="uil uil-edit"></i> Latest Blog Posts</h2>
+
+    <form method="GET" action="{% url 'blog' %}" class="search-filters">
+      <input type="text" name="q" placeholder="Search blogs..." value="{{ request.GET.q }}">
+      <select name="category" onchange="this.form.submit()">
+        <option value="all">All Categories &#9660;</option>
+        {% for cat in blog_categories %}
+          <option value="{{ cat.slug }}">{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="blog-grid">
+      {% for post in blog_posts %}
+        <div class="blog-card">
+          {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+          {% endif %}
+          <h3><a href="{% url 'blog_detail' slug=post.slug %}">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt|truncatewords:20|safe }}</p>
+          <a href="{% url 'blog_detail' slug=post.slug %}" class="read-more">Read More</a>
+        </div>
+      {% empty %}
+        <p>No blog posts published.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial Section -->
+<section class="testimonials section" id="testimonials">
+  <div class="testimonial-container">
+    <h2 class="section-title"><i class="uil uil-comment-alt-message"></i> What Our Clients Say</h2>
+    <div class="testimonial-carousel">
+      {% for testimonial in testimonials %}
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <div class="testimonial-text">
+            <h4>{{ testimonial.name|safe }}</h4>
+            <small>{{ testimonial.role|safe }}</small>
+            <p>{{ testimonial.content|safe }}</p>
+          </div>
+          {% if testimonial.image %}
+          <div class="testimonial-img">
+            <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+            <div class="testimonial-stars">
+              <i class="uil uil-star"></i>
+              <i class="uil uil-star"></i>
+              <i class="uil uil-star"></i>
+              <i class="uil uil-star"></i>
+              <i class="uil uil-star"></i>
             </div>
           </div>
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
-    </section>
-
-    <!-- 📂 Projects Section -->
-    <section class="projects section" id="projects">
-      <div class="container">
-        <h2 class="section-title">Our Projects 🚀</h2>
-
-        <form method="GET" action="{% url 'projects' %}" class="search-filters">
-          <input type="text" name="q" placeholder="🔍 Search projects..." value="{{ request.GET.q }}">
-          <select name="category" onchange="this.form.submit()">
-            <option value="all">All Categories &#9660;</option>
-            {% for cat in project_categories %}
-              <option value="{{ cat.slug }}">
-                {{ cat.name }}
-              </option>
-            {% endfor %}
-          </select>
-          <button type="submit">Search</button>
-        </form>
-        <!-- 📦 Project Grid -->
-        <div class="project-grid">
-          {% for project in projects %}
-          <div class="project-card">
-            {% if project.image %}
-            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
-            {% endif %}
-            <h3>
-              <a href="{% url 'project_details' project.slug %}" style="text-decoration: none;">
-                {{ project.title }}
-              </a>
-            </h3>
-            <p>{{ project.description|truncatewords:20|safe }}</p>
-            <div class="project-links">
-              {% if project.live_url %}
-              <a href="{{ project.live_url }}" target="_blank">View Project</a>
-              {% endif %}
-              <a href="{% url 'project_details' slug=project.slug %}" target="_blank" class="more-info">More Info</a>
-            </div>
-          </div>
-          {% empty %}
-          <p>No Projects added.</p>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
-
-    <!-- 📝 Blog Section -->
-    <section class="blogs section" id="blog">
-      <div class="container">
-        <h2 class="section-title">Latest Blog Posts 📝</h2>
-
-        <!-- Blog Search + Filters -->
-        <form method="GET" action="{% url 'blog' %}" class="search-filters">
-          <input type="text" name="q" placeholder="🔍 Search blogs..." value="{{ request.GET.q }}">
-          <select name="category" onchange="this.form.submit()">
-            <option value="all">All Categories &#9660;</option>
-            {% for cat in blog_categories %}
-              <option value="{{ cat.slug }}">
-                {{ cat.name }}
-              </option>
-            {% endfor %}
-          </select>
-          <button type="submit">Search</button>
-        </form>
-
-        <div class="blog-grid">
-          {% for post in blog_posts %}
-            <div class="blog-card">
-              {% if post.image %}
-                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
-              {% endif %}
-              <h3>
-                <a href="{% url 'blog_detail' slug=post.slug %}">{{ post.title }}</a>
-              </h3>
-              <p>{{ post.excerpt|truncatewords:20|safe }}</p>
-              <a href="{% url 'blog_detail' slug=post.slug %}" class="read-more">Read More</a>
-            </div>
-            {% empty %}
-          <p>No blog posts published.</p>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
-
-    <!-- 🌟 Testimonial Section -->
-    <section class="testimonials section" id="testimonials">
-      <div class="testimonial-container">
-        <h2 class="section-title">What Our Clients Say 💬</h2>
-        <div class="testimonial-carousel">
-          {% for testimonial in testimonials %}
-          <div class="testimonial-card">
-            <div class="testimonial-content">
-              <div class="testimonial-text">
-                <h4>{{ testimonial.name|safe }}</h4>
-                <small>{{ testimonial.role|safe }}</small>
-                <p>{{ testimonial.content|safe }}</p>
-              </div>
-              {% if testimonial.image %}
-              <div class="testimonial-img">
-                <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
-                <div class="testimonial-stars">
-                  <i class="uil uil-star"></i>
-                  <i class="uil uil-star"></i>
-                  <i class="uil uil-star"></i>
-                  <i class="uil uil-star"></i>
-                  <i class="uil uil-star"></i>
-                </div>
-              </div>
-              {% endif %}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="carousel-buttons">
-          <button id="prev">❮</button>
-          <button id="next">❯</button>
-        </div>
-      </div>
-    </section>
-
-
-
+      {% endfor %}
+    </div>
+    <div class="carousel-buttons">
+      <button id="prev"><i class="uil uil-angle-left-b"></i></button>
+      <button id="next"><i class="uil uil-angle-right-b"></i></button>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

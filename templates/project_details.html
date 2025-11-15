@@ -2,12 +2,12 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ project.title }} | SWFT LABS{% endblock %}
+{% block title %}{{ project.title }} 🚀 | SWFT LABS{% endblock %}
 
 {% block content %}
 <main class="section project-details">
   <div class="container">
-    <h2 class="project-title">💻 {{ project.title }}</h2>
+    <h2 class="project-title"><i class="uil uil-rocket"></i> {{ project.title }}</h2>
     <div class="project-meta">
       <span><i class="uil uil-calendar-alt"></i> {{ project.created_at }}</span>
       <span><i class="uil uil-eye"></i> {{ project.views }} views</span>

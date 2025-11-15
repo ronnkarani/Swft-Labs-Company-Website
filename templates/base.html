@@ -2,53 +2,111 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
+<head>
+    <!-- BASIC SETUP -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💻 SWFT LABS</title>
-  <!-- Unicons -->
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- SEO TITLE -->
+    <title>{% block title %}SWFT LABS — Software • Automation • AI • Creative Tech{% endblock %}</title>
+
+    <!-- META DESCRIPTION -->
+    <meta name="description" content="SWFT Labs delivers powerful software solutions, automation, AI integrations, creative websites, and digital innovation for businesses in Kenya and beyond." />
+
+    <!-- SEO KEYWORDS -->
+    <meta name="keywords" content="software development kenya, ai automation, swft labs, web design, Django developer, IT solutions kenya, creative tech" />
+
+    <!-- CANONICAL URL -->
+    <link rel="canonical" href="https://swftlabs.com/" />
+
+    <!-- FAVICONS -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}" />
+
+    <!-- OPEN GRAPH (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:title" content="SWFT LABS — Software • Automation • AI" />
+    <meta property="og:description" content="We build fast, scalable digital solutions — websites, systems, APIs, automation tools, and AI integrations." />
+    <meta property="og:image" content="{% static 'images/og-image.jpg' %}" />
+    <meta property="og:url" content="https://swftlabs.com/" />
+    <meta property="og:type" content="website" />
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SWFT LABS — Software • Automation • AI" />
+    <meta name="twitter:description" content="Modern software solutions built for speed, performance, and innovation." />
+    <meta name="twitter:image" content="{% static 'images/og-image.jpg' %}" />
+
+    <!-- Preload Fonts / CSS for Performance -->
+    <link rel="preload" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" as="style" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- MAIN STYLESHEET -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-  <!-- Particles.js -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- DARK MODE SUPPORT (Optional toggle in navbar) -->
+    <script>
+        document.documentElement.classList.toggle(
+            'dark',
+            localStorage.getItem('theme') === 'dark'
+        );
+    </script>
 
-  <script src="{% static 'js/script.js' %}" defer></script>
-  </head>
+    <!-- PARTICLES JS -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+
+    <!-- MAIN JS -->
+    <script src="{% static 'js/script.js' %}" defer></script>
+
+    <!-- STRUCTURED DATA (Google SEO Boost) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "SWFT Labs",
+        "url": "https://swftlabs.com/",
+        "logo": "https://swftlabs.com/static/images/og-image.jpg",
+        "description": "A modern software development & AI automation company offering custom systems, websites, APIs, and digital innovation.",
+        "sameAs": [
+            "https://www.instagram.com/yourhandle",
+            "https://www.linkedin.com/company/swftlabs"
+        ]
+    }
+    </script>
+
+</head>
+
 <body>
 
-    <!-- 🌟 Navbar -->
-  {% include 'includes/navbar.html' %}
+    <!-- 🌟 NAVBAR -->
+    {% include 'includes/navbar.html' %}
 
-  <!-- Global Message Alerts -->
-{% if messages %}
-<div class="container message-container">
-  {% for message in messages %}
-    <div class="alert {{ message.tags }}">
-      {{ message }}
+    <!-- 🔔 GLOBAL MESSAGE ALERTS -->
+    {% if messages %}
+    <div class="container message-container">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
     </div>
-  {% endfor %}
-</div>
-{% endif %}
+    {% endif %}
 
-  <!-- ⭐️ Particle Background -->
+    <!-- PARTICLES BACKGROUND -->
     <div id="particles-js"></div>
 
-    <!-- Main Content Block -->
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-  <!-- Scroll to Top Button -->
-<button id="scrollToTopBtn" title="Go to top">↑</button>
+    <!-- SCROLL TO TOP BUTTON -->
+    <button id="scrollToTopBtn" title="Go to top">↑</button>
 
-<!-- Elfsight WhatsApp Chat WhatsApp Chat -->
+    <!-- WHATSAPP CHAT WIDGET -->
     <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div  class="elfsight-app-9eebebbd-3eae-4577-a8ea-3f92c8fe4ac4" data-elfsight-app-lazy>
-    </div>
+    <div class="elfsight-app-9eebebbd-3eae-4577-a8ea-3f92c8fe4ac4" data-elfsight-app-lazy></div>
 
-
+    <!-- FOOTER -->
     {% include 'includes/footer.html' %}
 
 </body>
