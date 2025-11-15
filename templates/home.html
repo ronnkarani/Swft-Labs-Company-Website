@@ -117,7 +117,7 @@
     <form method="GET" action="{% url 'projects' %}" class="search-filters">
       <input type="text" name="q" placeholder="Search projects..." value="{{ request.GET.q }}">
       <select name="category" onchange="this.form.submit()">
-        <option value="all">All Categories &#9660;</option>
+        <option value="all">All Categories </option>
         {% for cat in project_categories %}
           <option value="{{ cat.slug }}">{{ cat.name }}</option>
         {% endfor %}
@@ -157,7 +157,7 @@
     <form method="GET" action="{% url 'blog' %}" class="search-filters">
       <input type="text" name="q" placeholder="Search blogs..." value="{{ request.GET.q }}">
       <select name="category" onchange="this.form.submit()">
-        <option value="all">All Categories &#9660;</option>
+        <option value="all">All Categories </option>
         {% for cat in blog_categories %}
           <option value="{{ cat.slug }}">{{ cat.name }}</option>
         {% endfor %}
