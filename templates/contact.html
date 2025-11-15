@@ -13,11 +13,6 @@
        
         <!-- Contact Form -->
         <form method="post" action="{% url 'contact' %}" class="contact-form" >
-           {% if messages %}
-      {% for message in messages %}
-        <p class="alert">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
                 {% csrf_token %}
           <input type="text" name="name" placeholder="Your Name" required />
           <input type="email" name="email" placeholder="Your Email" required />

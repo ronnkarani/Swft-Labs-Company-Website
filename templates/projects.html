@@ -8,18 +8,18 @@
   <h2 class="section-title">All Projects 🚀</h2>
 
   <!-- 🔍 Search + Filter -->
-  <form method="get" action="{% url 'projects' %}" class="blog-filters">
-    <input type="text" name="q" placeholder="🔍 Search projects..." value="{{ query }}">
-    <select name="category" onchange="this.form.submit()">
-      <option value="all">All Categories</option>
-      {% for cat in categories %}
-        <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
-          {{ cat.name }}
-        </option>
-      {% endfor %}
-    </select>
-    <button type="submit">Search</button>
-  </form>
+  <form method="get" action="{% url 'projects' %}" class="search-filters">
+  <input type="text" name="q" placeholder="🔍 Search projects..." value="{{ query }}">
+  <select name="category" onchange="this.form.submit()">
+    <option value="all">All Categories</option>
+    {% for cat in categories %}
+      <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
+        {{ cat.name }}
+      </option>
+    {% endfor %}
+  </select>
+  <button type="submit">Search</button>
+</form>
 
   <!-- 📂 Projects -->
   <div class="project-grid">

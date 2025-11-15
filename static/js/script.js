@@ -154,3 +154,22 @@ carousel.addEventListener('touchmove', (e) => {
       behavior: "smooth"
     });
   };
+
+// Auto-hide Django messages after 4 seconds
+document.addEventListener("DOMContentLoaded", () => {
+  const alerts = document.querySelectorAll(".alert");
+
+  alerts.forEach((alert) => {
+    setTimeout(() => {
+      alert.classList.add("fade-out");
+    }, 3500); // start fade-out after 3.5 seconds
+
+    // remove from DOM completely
+    alert.addEventListener("animationend", () => {
+      if (alert.classList.contains("fade-out")) {
+        alert.remove();
+      }
+    });
+  });
+});
+

@@ -1,11 +1,14 @@
 # views.py
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Project, BlogPost, Comment, SocialLink, Hero, About, Testimonial, Service, OurStory, WhyChooseUs, Category
+from .models import Project, BlogPost, Comment, SocialLink, Hero, About, Testimonial, Service, OurStory, WhyChooseUs, BlogCategory, ProjectCategory
+from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
+from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
+
 
 def home(request):
     hero = Hero.objects.first()  
@@ -17,7 +20,8 @@ def home(request):
     services = Service.objects.all()
     projects = Project.objects.all().order_by('-created_at')[:4]
     blogs = BlogPost.objects.all().order_by('-created_at')[:4]
-    categories = Category.objects.all()
+    blog_categories = BlogCategory.objects.all()
+    project_categories = ProjectCategory.objects.all()
     
     return render(request, 'home.html', {
         'hero': hero,
@@ -29,7 +33,8 @@ def home(request):
         "social_links": social_links,
         'projects': projects,
         'blog_posts': blogs,
-        'categories': categories,
+        'blog_categories': blog_categories,
+        'project_categories': project_categories,
         
     })
 
@@ -51,7 +56,7 @@ def blog(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    categories = Category.objects.all()  # ✅ FIX: real category objects
+    categories = BlogCategory.objects.all()
 
     return render(request, 'blog.html', {
         'blog_posts': page_obj,
@@ -90,22 +95,22 @@ def projects(request):
 
     projects = Project.objects.all().order_by('-created_at')
 
-    # 📂 Filter by category
+    # Filter by category
     if category_slug and category_slug != "all":
         projects = projects.filter(category__slug=category_slug)
 
-    # 🔎 Filter by search
+    # Filter by search
     if query:
         projects = projects.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
         )
 
-    # 🔢 Pagination
-    paginator = Paginator(projects, 6)  # 6 projects per page
+    # Pagination
+    paginator = Paginator(projects, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    categories = Category.objects.all()
+    categories = ProjectCategory.objects.all()
 
     return render(request, 'projects.html', {
         'projects': page_obj,
@@ -113,7 +118,6 @@ def projects(request):
         'selected_category': category_slug,
         'query': query,
     })
-
 
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -139,17 +143,19 @@ def project_detail(request, slug):
         'comments': comments
     })
 
-
 def signup_view(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "🎉 Account created successfully! You can now log in.")
             return redirect('login')
+        else:
+            messages.error(request, "❌ Something went wrong. Please check the form.")
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
 
+    return render(request, 'signup.html', {'form': form})
 
 def contact(request):
     social_links = SocialLink.objects.all()
@@ -176,3 +182,27 @@ def contact(request):
         return redirect("contact")
 
     return render(request, "contact.html",{"social_links": social_links,})
+
+
+# Messages for successful login
+def on_login(sender, request, user, **kwargs):
+    from django.contrib import messages
+    messages.success(request, f"👋 Welcome back, {user.username}!")
+
+user_logged_in.connect(on_login)
+
+
+# Messages for failed login
+def on_login_fail(sender, credentials, request, **kwargs):
+    from django.contrib import messages
+    messages.error(request, "❌ Incorrect username or password.")
+
+user_login_failed.connect(on_login_fail)
+
+
+# Messages for logout
+def on_logout(sender, request, user, **kwargs):
+    from django.contrib import messages
+    messages.info(request, "👋 You have been logged out successfully.")
+
+user_logged_out.connect(on_logout)

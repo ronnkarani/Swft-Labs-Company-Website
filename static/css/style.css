@@ -305,11 +305,19 @@ h1 {
   padding: 2rem;
 }
 
+/* ALWAYS put hero image on top on all devices */
+.home__image {
+  order: -1 !important;
+  margin-bottom: 1.5rem;
+}
+
+/* Make sure the layout stays vertical */
 .home__content {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  flex-direction: column !important;
   text-align: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 .hero-name {
@@ -463,6 +471,59 @@ h1 {
     width: 150px;
   }
 }
+
+.message-container {
+  margin-top: 90px; /* pushes down from navbar */
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Message Types */
+.alert.success {
+  background: #0f5132;
+  color: #d1e7dd;
+  border-left: 4px solid #75b798;
+}
+
+.alert.error {
+  background: #842029;
+  color: #f8d7da;
+  border-left: 4px solid #f1aeb5;
+}
+
+.alert.warning {
+  background: #664d03;
+  color: #fff3cd;
+  border-left: 4px solid #ffe69c;
+}
+
+.alert.info {
+  background: #055160;
+  color: #cff4fc;
+  border-left: 4px solid #9eeaf9;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade OUT animation after delay */
+.alert.fade-out {
+  animation: fadeOut 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
 
 .pagination {
   display: flex;
@@ -1325,6 +1386,62 @@ h1 {
 #scrollToTopBtn:hover {
   background: #0056b3; /* Darker shade on hover */
   transform: scale(1.1);
+}
+/* Search + Filters */
+.search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.search-filters input[type="text"],
+.search-filters select {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #1e1e1e;
+  color: #fff;
+  font-size: 1rem;
+  min-width: 180px;
+}
+
+.search-filters input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+.search-filters select {
+  cursor: pointer;
+}
+
+.search-filters button {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #58a6ff;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.search-filters button:hover {
+  background-color: #3c85d4;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .search-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-filters input[type="text"],
+  .search-filters select,
+  .search-filters button {
+    width: 100%;
+  }
 }
 
 
