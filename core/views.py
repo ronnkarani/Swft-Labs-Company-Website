@@ -16,7 +16,7 @@ def home(request):
     about = About.objects.all()  
     our_story = OurStory.objects.first()
     why_choose = WhyChooseUs.objects.first()
-    testimonials = Testimonial.objects.all()
+    testimonials = Testimonial.objects.filter(featured=True)
     social_links = SocialLink.objects.all()
     services = Service.objects.all()
     projects = Project.objects.all().order_by('-created_at')[:4]
@@ -24,6 +24,10 @@ def home(request):
     blog_categories = BlogCategory.objects.all()
     project_categories = ProjectCategory.objects.all()
     
+    pending_testimonials = 0
+    if request.user.is_authenticated and request.user.is_staff:
+        pending_testimonials = Testimonial.objects.filter(featured=False).count()
+
     return render(request, 'home.html', {
         'hero': hero,
         'about_sections': about,
@@ -36,7 +40,7 @@ def home(request):
         'blog_posts': blogs,
         'blog_categories': blog_categories,
         'project_categories': project_categories,
-        
+        'pending_testimonials': pending_testimonials,
     })
 
 def blog(request):

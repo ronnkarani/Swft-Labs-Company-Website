@@ -76,10 +76,27 @@ class ServiceAdmin(admin.ModelAdmin):
 # --------------------------
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ('name', 'role', 'featured')
-    list_filter = ('featured',)
+    list_display = ('clean_name', 'clean_role', 'clean_content', 'featured', 'rating')
+    list_filter = ('featured', 'rating')
+    search_fields = ('name', 'role', 'content')
 
+    def clean_name(self, obj):
+        """Strip HTML from name"""
+        text = strip_tags(obj.name)
+        return text
+    clean_name.short_description = "Name"
 
+    def clean_role(self, obj):
+        """Strip HTML from role"""
+        text = strip_tags(obj.role)
+        return text
+    clean_role.short_description = "Role"
+
+    def clean_content(self, obj):
+        """Strip HTML from content and truncate for display"""
+        text = strip_tags(obj.content)
+        return text[:80] + ("..." if len(text) > 80 else "")
+    clean_content.short_description = "Content"
 # --------------------------
 # SOCIAL LINK ADMIN
 # --------------------------

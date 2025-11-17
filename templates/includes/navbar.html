@@ -18,7 +18,18 @@
 
     <!-- User dropdown -->
     <div class="nav__icons">
-      
+      {% if request.user.is_authenticated and request.user.is_staff %}
+  <!-- Admin notifications -->
+  <div class="admin-notification">
+    <a href="{% url 'admin:core_testimonial_changelist' %}" title="Pending Testimonials">
+      <i class="uil uil-envelope-alt"></i>
+      {% if pending_testimonials > 0 %}
+        <span class="notification-badge">{{ pending_testimonials }}</span>
+      {% endif %}
+    </a>
+  </div>
+{% endif %}
+
 
       <div class="user-dropdown">
         <i class="uil uil-user login-icon" title="Account"></i>

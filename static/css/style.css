@@ -110,6 +110,29 @@ h1 {
   cursor: pointer;
 }
 
+.admin-notification {
+  position: relative;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.admin-notification i {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
 .dropdown-arrow {
   font-size: 16px;
   transition: transform 0.3s ease;
@@ -1250,11 +1273,12 @@ h1 {
   margin-bottom: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .testimonial-btn:hover {
   background: #0651a1;
+  color: #fff;
 }
 
 .testimonial-form-container form {
