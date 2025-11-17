@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import strip_tags
 from .models import (
     Project, BlogPost, SocialLink, Hero, About, Testimonial,
-    Service, OurStory, WhyChooseUs, BlogCategory, ProjectCategory
+    Service, OurStory, WhyChooseUs, BlogCategory, ProjectCategory, FAQ, SubFAQ
 )
 
 # Helper to strip HTML safely in list display
@@ -132,6 +132,18 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "created_at")
     list_filter = ("category",)
 
+class SubFAQInline(admin.TabularInline):
+    model = SubFAQ
+    extra = 1
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ("question",)
+    inlines = [SubFAQInline]
+
+@admin.register(SubFAQ)
+class SubFAQAdmin(admin.ModelAdmin):
+    list_display = ("question", "faq")
 
 # --------------------------
 # PROJECT ADMIN

@@ -1,6 +1,6 @@
 # views.py
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Project, BlogPost, Comment, SocialLink, Hero, About, Testimonial, Service, OurStory, WhyChooseUs, BlogCategory, ProjectCategory
+from .models import FAQ, Project, BlogPost, Comment, SocialLink, Hero, About, Testimonial, Service, OurStory, WhyChooseUs, BlogCategory, ProjectCategory
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm
@@ -163,6 +163,16 @@ def suggestions(request):
         results = [{"title": p.title, "url": p.get_absolute_url()} for p in projects]
 
     return JsonResponse({"results": results})
+
+def faqs(request):
+    faq_list = FAQ.objects.all().order_by('id')
+    paginator = Paginator(faq_list, 10)  # Show 10 FAQs per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "faqs.html", {"faqs": page_obj})
+
 
 def signup_view(request):
     if request.method == "POST":

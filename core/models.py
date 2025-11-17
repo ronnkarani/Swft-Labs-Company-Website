@@ -9,7 +9,7 @@ from django.urls import reverse
 class Hero(models.Model):
     greeting =models.CharField(max_length=255, default="Hi 👋, welcome to")
     name = models.CharField(max_length=100)
-    subtitle = RichTextUploadingField(max_length=500, blank=True)
+    subtitle = RichTextUploadingField(max_length=1500, blank=True)
     image = models.ImageField(upload_to='hero/', blank=True, null=True)
 
     def __str__(self):
@@ -165,7 +165,24 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.name}"
-    
+
+# FAQ Models
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.question
+
+
+class SubFAQ(models.Model):
+    faq = models.ForeignKey(FAQ, on_delete=models.CASCADE, related_name='subquestions')
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+
+    def __str__(self):
+        return f"{self.question} (sub of {self.faq.question})"
+
+
 # Testimonial Section
 class Testimonial(models.Model):
     name = RichTextUploadingField(max_length=300)

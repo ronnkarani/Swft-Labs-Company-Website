@@ -236,6 +236,44 @@
     </div>
   </section>
 
+<!-- FAQ Section -->
+<section class="faqs section" id="faqs">
+  <div class="container">
+    <h2 class="section-title"><i class="uil uil-question-circle"></i> Frequently Asked Questions</h2>
+    <div class="faq-grid">
+
+      {% for faq in faqs %}
+      <div class="faq-card">
+        <div class="faq-main-question">
+          <h3>{{ faq.question }}</h3>
+          <i class="uil uil-plus faq-toggle"></i>
+        </div>
+
+        <div class="faq-subquestions">
+          {% for sub in faq.subquestions %}
+          <div class="faq-subquestion">
+            <div class="sub-question">
+              <span>{{ sub.question }}</span>
+              <i class="uil uil-plus sub-toggle"></i>
+            </div>
+            <div class="sub-answer">
+              <p>{{ sub.answer }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <div class="view-more-container">
+      <a href="{% url 'faqs' %}" class="view-more-btn">View All FAQs</a>
+    </div>
+  </div>
+</section>
+
+
 <!-- Testimonial Section -->
 <section class="testimonials section" id="testimonials">
   <div class="testimonial-container">
@@ -252,58 +290,58 @@
 
     <!-- Form (hidden by default) -->
     {% if user.is_authenticated %}
-    <div id="testimonialFormContainer" class="testimonial-form-container" style="display:none;">
-      <form method="POST" action="{% url 'add_testimonial' %}" enctype="multipart/form-data" id="testimonial-form">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Your Name" value="{{ user.username }}" required>
-        <input type="text" name="role" placeholder="Your Role" required>
-        <textarea name="content" placeholder="Your Testimonial" required></textarea>
-        <input type="file" name="image" accept="image/*">
+      <div id="testimonialFormContainer" class="testimonial-form-container" style="display:none;">
+        <form method="POST" action="{% url 'add_testimonial' %}" enctype="multipart/form-data" id="testimonial-form">
+          {% csrf_token %}
+          <input type="text" name="name" placeholder="Your Name" value="{{ user.username }}" required>
+          <input type="text" name="role" placeholder="Your Role" required>
+          <textarea name="content" placeholder="Your Testimonial" required></textarea>
+          <input type="file" name="image" accept="image/*">
 
-        <!-- Star rating -->
-        <div class="star-rating">
-          <i class="uil uil-star" data-value="1"></i>
-          <i class="uil uil-star" data-value="2"></i>
-          <i class="uil uil-star" data-value="3"></i>
-          <i class="uil uil-star" data-value="4"></i>
-          <i class="uil uil-star" data-value="5"></i>
-        </div>
-        <input type="hidden" name="rating" id="rating-value" value="5">
+          <!-- Star rating -->
+          <div class="star-rating">
+            <i class="uil uil-star" data-value="1"></i>
+            <i class="uil uil-star" data-value="2"></i>
+            <i class="uil uil-star" data-value="3"></i>
+            <i class="uil uil-star" data-value="4"></i>
+            <i class="uil uil-star" data-value="5"></i>
+          </div>
+          <input type="hidden" name="rating" id="rating-value" value="5">
 
-        <button type="submit">Submit Testimonial</button>
-      </form>
+          <button type="submit">Submit Testimonial</button>
+        </form>
 
-    </div>
+      </div>
     {% endif %}
 
     <div class="testimonial-carousel">
       {% for testimonial in testimonials %}
       <div class="testimonial-card">
-  <div class="testimonial-content">
-    <div class="testimonial-text">
-      <h4>{{ testimonial.name|safe }}</h4>
-      <small>{{ testimonial.role|safe }}</small>
-      <p>{{ testimonial.content|safe }}</p>
+        <div class="testimonial-content">
+          <div class="testimonial-text">
+            <h4>{{ testimonial.name|safe }}</h4>
+            <small>{{ testimonial.role|safe }}</small>
+            <p>{{ testimonial.content|safe }}</p>
 
-      <!-- Show stars dynamically -->
-      <div class="testimonial-stars">
-        {% for i in "12345" %}
-          {% if forloop.counter <= testimonial.rating %}
-            <i class="uil uil-star selected"></i>
-          {% else %}
-            <i class="uil uil-star"></i>
+            <!-- Show stars dynamically -->
+            <div class="testimonial-stars">
+              {% for i in "12345" %}
+                {% if forloop.counter <= testimonial.rating %}
+                  <i class="uil uil-star selected"></i>
+                {% else %}
+                  <i class="uil uil-star"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if testimonial.image %}
+          <div class="testimonial-img">
+            <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+          </div>
           {% endif %}
-        {% endfor %}
+        </div>
       </div>
-    </div>
-
-    {% if testimonial.image %}
-    <div class="testimonial-img">
-      <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
-    </div>
-    {% endif %}
-  </div>
-</div>
 
       {% endfor %}
     </div>

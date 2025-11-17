@@ -213,6 +213,29 @@ document.addEventListener("input", function(e) {
         });
 });
 
+// FAQ Toggle
+document.querySelectorAll('.faq-main-question').forEach(item => {
+  item.addEventListener('click', () => {
+    const parent = item.parentElement;
+    const subqs = parent.querySelector('.faq-subquestions');
+    const icon = item.querySelector('.faq-toggle');
+
+    subqs.style.display = subqs.style.display === 'flex' ? 'none' : 'flex';
+    icon.classList.toggle('rotated');
+  });
+});
+
+document.querySelectorAll('.sub-question').forEach(item => {
+  item.addEventListener('click', () => {
+    const answer = item.nextElementSibling;
+    const icon = item.querySelector('.sub-toggle');
+
+    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+    icon.classList.toggle('rotated');
+  });
+});
+
+
 const toggleBtn = document.getElementById('toggleTestimonialForm');
   const formContainer = document.getElementById('testimonialFormContainer');
   if (toggleBtn) {
