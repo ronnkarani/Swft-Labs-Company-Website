@@ -8,7 +8,8 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
-
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     hero = Hero.objects.first()  
@@ -143,6 +144,22 @@ def project_detail(request, slug):
         'comments': comments
     })
 
+def suggestions(request):
+    query = request.GET.get("q", "")
+    type = request.GET.get("type", "")
+
+    results = []
+
+    if type == "blog":
+        posts = BlogPost.objects.filter(title__icontains=query)[:5]
+        results = [{"title": p.title, "url": p.get_absolute_url()} for p in posts]
+
+    if type == "project":
+        projects = Project.objects.filter(title__icontains=query)[:5]
+        results = [{"title": p.title, "url": p.get_absolute_url()} for p in projects]
+
+    return JsonResponse({"results": results})
+
 def signup_view(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -184,6 +201,26 @@ def contact(request):
     return render(request, "contact.html",{"social_links": social_links,})
 
 
+@login_required
+def add_testimonial(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        role = request.POST.get("role")
+        content = request.POST.get("content")
+        rating = int(request.POST.get("rating", 5))
+        image = request.FILES.get("image")
+
+        Testimonial.objects.create(
+            name=name,
+            role=role,
+            content=content,
+            rating=rating,
+            image=image
+        )
+        messages.success(request, "✅ Testimonial submitted! Wait for admin approval.")
+        return redirect("home")
+    return redirect("home")
+
 # Messages for successful login
 def on_login(sender, request, user, **kwargs):
     from django.contrib import messages
@@ -191,14 +228,12 @@ def on_login(sender, request, user, **kwargs):
 
 user_logged_in.connect(on_login)
 
-
 # Messages for failed login
 def on_login_fail(sender, credentials, request, **kwargs):
     from django.contrib import messages
     messages.error(request, "❌ Incorrect username or password.")
 
 user_login_failed.connect(on_login_fail)
-
 
 # Messages for logout
 def on_logout(sender, request, user, **kwargs):

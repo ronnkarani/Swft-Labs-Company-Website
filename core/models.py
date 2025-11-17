@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.text import Truncator
-
+from django.urls import reverse
 
 # Hero Section
 class Hero(models.Model):
@@ -104,6 +104,9 @@ class Project(models.Model):
     views = models.PositiveIntegerField(default=0)
     likes = models.PositiveIntegerField(default=0)
 
+    def get_absolute_url(self):
+        return reverse("project_details", args=[self.slug])
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
@@ -130,6 +133,9 @@ class BlogPost(models.Model):
     views = models.PositiveIntegerField(default=0)
     likes = models.PositiveIntegerField(default=0)
 
+    def get_absolute_url(self):
+        return reverse("blog_detail", args=[self.slug])
+    
     def save(self, *args, **kwargs):
         # Auto-generate slug if not provided
         if not self.slug:
@@ -167,6 +173,8 @@ class Testimonial(models.Model):
     content = RichTextUploadingField()
     image = models.ImageField(upload_to='testimonials/', blank=True, null=True)
     featured = models.BooleanField(default=False)
+    rating = models.PositiveSmallIntegerField(default=5)
+
 
     def __str__(self):
         return self.name

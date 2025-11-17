@@ -8,18 +8,24 @@
   <h2 class="section-title">All Projects <i class="uil uil-rocket"></i></h2>
 
   <!-- 🔍 Search + Filter -->
-  <form method="get" action="{% url 'projects' %}" class="search-filters">
-  <input type="text" name="q" placeholder="🔍 Search projects..." value="{{ query }}">
-  <select name="category" onchange="this.form.submit()">
-    <option value="all">All Categories</option>
-    {% for cat in categories %}
-      <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
-        {{ cat.name }}
-      </option>
-    {% endfor %}
-  </select>
-  <button type="submit">Search</button>
-</form>
+  <form method="GET" action="{% url 'projects' %}" class="search-filters">
+    <input type="text" 
+          name="q" 
+          placeholder="🔍 Search projects..."
+          value="{{ query }}">
+
+    <select name="category" onchange="this.form.submit()">
+      <option value="all">All Categories</option>
+      {% for cat in categories %}
+        <option value="{{ cat.slug }}"
+                {% if selected_category == cat.slug %}selected{% endif %}>
+          {{ cat.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Search</button>
+  </form>
 
   <!-- 📂 Projects -->
   <div class="project-grid">
@@ -34,6 +40,20 @@
           </a>
         </h3>
         <p>{{ project.description|truncatewords:25|safe }}</p>
+        <div class="project-meta">
+      <span><i class="uil uil-calendar-alt"></i> {{ project.created_at }}</span>
+      <span><i class="uil uil-eye"></i> {{ project.views }} views</span>
+      <span>
+        <form method="POST" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" name="like" style="all:unset; cursor:pointer;">
+            <i class="uil uil-heart"></i>
+          </button>
+          {{ project.likes }} likes
+        </form>
+      </span>
+      <span><i class="uil uil-comment-alt-lines"></i> {{ comments.count }} comments</span>
+    </div>
         <div class="project-links">
           {% if project.live_url %}
             <a href="{{ project.live_url }}" target="_blank">View Project</a>

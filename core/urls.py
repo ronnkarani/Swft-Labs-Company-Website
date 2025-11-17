@@ -11,5 +11,7 @@ urlpatterns = [
     path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
     path('projects/', views.projects, name='projects'),
     path('projects/<slug:slug>/', views.project_detail, name='project_details'),
+    path("suggestions/", views.suggestions, name="suggestions"),
+    path('add-testimonial/', views.add_testimonial, name='add_testimonial'),
     path('contact/', views.contact, name='contact'),
 ]

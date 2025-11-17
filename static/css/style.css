@@ -383,6 +383,7 @@ h1 {
 
 .button:hover {
   background-color: #3c85d4;
+  color: #fff;
 }
 
 .button--outline {
@@ -618,7 +619,7 @@ h1 {
 }
 
 .project-links .more-info {
-  color: #aaa;
+  color: #58a6ff;
 }
 
 .project-image {
@@ -664,8 +665,15 @@ h1 {
   transform: translateY(-5px);
 }
 
-.blog-card h3 {
+.blog-card h3, a {
   color: #58a6ff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.blog-card h3, a:hover {
+  color: #0a3b74;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
 }
@@ -754,6 +762,29 @@ h1 {
 .blog-content ul {
   margin-left: 1.5rem;
   margin-bottom: 2rem;
+}
+
+.view-more-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.view-more-btn {
+  display: inline-block;
+  background: #58a6ff;
+  color: #fff;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.view-more-btn:hover {
+  background: #0a3b74;
+  color: #fff;
+  transform: translateY(-3px);
 }
 
 .blog-comments {
@@ -1207,8 +1238,91 @@ h1 {
 }
 
 .carousel-buttons button:hover {
-  background: #3c85d4;
+  background: #0651a1;
 }
+
+.testimonial-btn {
+  display: inline-block;
+  background: #58a6ff;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.testimonial-btn:hover {
+  background: #0651a1;
+}
+
+.testimonial-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-form-container input,
+.testimonial-form-container textarea {
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.testimonial-form-container button {
+  background: #58a6ff;
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.testimonial-form-container button:hover {
+  background: #0651a1;
+}
+/* Center button above testimonial carousel */
+.testimonial-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 1rem;
+}
+
+.star-rating i {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.testimonial-stars i.selected {
+  color: #f5c518;
+}
+.testimonial-stars i {
+  color: #ccc;
+  font-size: 1rem;
+  margin: 0 2px;
+}
+
+
+.star-rating i.hover,
+.star-rating i.selected {
+  color: #f5c518;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
@@ -1232,6 +1346,7 @@ h1 {
     margin-top: 1rem;
   }
 }
+
 /* Blog Filters (Search + Category) */
 .blog-filters {
   display: flex;
@@ -1388,7 +1503,7 @@ h1 {
   font-size: 18px;
   border: none;
   outline: none;
-  background: #007bff; /* Change to your brand color */
+  background: #58a6ff; /* Change to your brand color */
   color: white;
   cursor: pointer;
   padding: 12px 16px;
@@ -1441,6 +1556,41 @@ h1 {
 
 .search-filters button:hover {
   background-color: #3c85d4;
+}
+
+/* === SEARCH SUGGESTIONS DROPDOWN === */
+.search-suggestions {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+  background: #1e1e1e;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  z-index: 999;
+  display: none; /* Hidden by default */
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.search-suggestions.active {
+  display: block;
+}
+
+.search-suggestion-item {
+  padding: 0.7rem 1rem;
+  color: #fff;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+}
+
+.search-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.search-suggestion-item:hover {
+  background: #333;
 }
 
 /* Mobile adjustments */

@@ -173,3 +173,86 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// === LIVE SEARCH SUGGESTIONS ===
+document.addEventListener("input", function(e) {
+    if (!e.target.classList.contains("live-search")) return;
+
+    const query = e.target.value;
+    const suggestionBox = e.target.parentElement.querySelector(".search-suggestions");
+    const type = e.target.dataset.type; // blog / project
+
+    if (query.length < 1) {
+        suggestionBox.classList.remove("active");
+        suggestionBox.innerHTML = "";
+        return;
+    }
+
+    fetch(`/suggestions/?type=${type}&q=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            suggestionBox.innerHTML = "";
+
+            if (data.results.length === 0) {
+                suggestionBox.classList.remove("active");
+                return;
+            }
+
+            data.results.forEach(item => {
+                const div = document.createElement("div");
+                div.classList.add("search-suggestion-item");
+                div.textContent = item.title;
+
+                div.onclick = () => {
+                    window.location.href = item.url;
+                };
+
+                suggestionBox.appendChild(div);
+            });
+
+            suggestionBox.classList.add("active");
+        });
+});
+
+const toggleBtn = document.getElementById('toggleTestimonialForm');
+  const formContainer = document.getElementById('testimonialFormContainer');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+
+const stars = document.querySelectorAll('.star-rating i');
+  const ratingInput = document.getElementById('rating-value');
+
+  stars.forEach((star) => {
+    // Hover effect
+    star.addEventListener('mouseover', () => {
+      const val = parseInt(star.dataset.value);
+      highlightStars(val);
+    });
+
+    star.addEventListener('mouseout', () => {
+      const selectedVal = parseInt(ratingInput.value);
+      highlightStars(selectedVal);
+    });
+
+    // Click to select
+    star.addEventListener('click', () => {
+      const val = parseInt(star.dataset.value);
+      ratingInput.value = val;
+      highlightStars(val);
+    });
+  });
+
+  function highlightStars(rating) {
+    stars.forEach((star) => {
+      if (parseInt(star.dataset.value) <= rating) {
+        star.classList.add('selected');
+      } else {
+        star.classList.remove('selected');
+      }
+    });
+  }
+
+  // Initialize stars
+  highlightStars(parseInt(ratingInput.value));
