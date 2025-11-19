@@ -281,9 +281,10 @@
 
     <!-- Centered Button Container -->
     <div class="testimonial-btn-wrapper">
-      {% if user.is_authenticated %}
-        <button id="toggleTestimonialForm" class="testimonial-btn">Add Testimonial</button>
-      {% else %}
+      {% if user.is_authenticated and not has_testimonial %}
+      <a href="#addTestimonial" class="button">Add Testimonial</a>
+      {% endif %}
+      {% if not user.is_authenticated %}
         <a href="{% url 'signup' %}" class="testimonial-btn">Sign up to add Testimonial</a>
       {% endif %}
     </div>

@@ -12,8 +12,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 def home(request):
-    hero = Hero.objects.first()  
-    about = About.objects.all()  
+    hero = Hero.objects.first()
+    about = About.objects.all()
     our_story = OurStory.objects.first()
     why_choose = WhyChooseUs.objects.first()
     testimonials = Testimonial.objects.filter(featured=True)
@@ -23,25 +23,32 @@ def home(request):
     blogs = BlogPost.objects.all().order_by('-created_at')[:4]
     blog_categories = BlogCategory.objects.all()
     project_categories = ProjectCategory.objects.all()
-    
+
     pending_testimonials = 0
     if request.user.is_authenticated and request.user.is_staff:
         pending_testimonials = Testimonial.objects.filter(featured=False).count()
+
+    # NEW: check if logged-in user has already submitted a testimonial
+    has_testimonial = False
+    if request.user.is_authenticated:
+        has_testimonial = Testimonial.objects.filter(name=request.user.username).exists()
 
     return render(request, 'home.html', {
         'hero': hero,
         'about_sections': about,
         'our_story': our_story,
         'why_choose': why_choose,
-        "services": services,
+        'services': services,
         'testimonials': testimonials,
-        "social_links": social_links,
+        'social_links': social_links,
         'projects': projects,
         'blog_posts': blogs,
         'blog_categories': blog_categories,
         'project_categories': project_categories,
         'pending_testimonials': pending_testimonials,
+        'has_testimonial': has_testimonial,  # 👈 ADDED
     })
+
 
 def blog(request):
     category_slug = request.GET.get('category')
